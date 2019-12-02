@@ -33,4 +33,6 @@ print("Adjusted Fuel Sum: " + str(adjustedFuelSum))
 
 #print("TEST: " + str(GetAdjustedFuel(100756)))
 
+#Bum-ba-dum baby
+
 file.close
