@@ -1,4 +1,3 @@
 string = "hello"
-print(string[2])
-print(string[1])
-print(string[1] < string[2])
+print(string[:-2])
+print(int(137/10))
