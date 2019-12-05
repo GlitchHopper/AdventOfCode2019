@@ -16,8 +16,6 @@ def GetLeg(path, position, instruction):
             print("Invalid Leg Instruction")
         path.add(tuple(position))
 
-
-
 file = open("/Users/nathanielgugel/Desktop/AdventOfCode2019/AoC_2019_Day3/PuzzleInput.txt")
 
 cables = []
@@ -38,10 +36,6 @@ distances = []
 
 for intersection in cableIntersections:
     distances.append(abs(intersection[0]) + abs(intersection[1]))
-# def sortByDistance(intersection):
-#     #return (math.sqrt(math.pow(intersection[0], 2) + math.pow(intersection[1], 2)))
-#     return abs(intersection[0]) + abs(intersection[1])
-# cableIntersections.sort(key = sortByDistance)
 
 distances.sort()
-print(distances[0])
+print("Shortest Manhattan distances is " + str(distances[0]))
