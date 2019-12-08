@@ -1,6 +1,5 @@
-set1 = {{1, 2, 3}, {4, 5, 6}}
+from "/Users/nathanielgugel/Desktop/AdventOfCode2019/Day7/AutomaticInput.py" import AutomaticInput
 
-print(set1)
+test = AutomaticInput("Blarg")
 
-for s in set1:
-    print(s)
+test.Print()

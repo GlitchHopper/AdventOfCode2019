@@ -3,8 +3,6 @@ file = open("/Users/nathanielgugel/Desktop/AdventOfCode2019/Day6/PuzzleInput")
 orbits = {}
 count = 0
 
-
-
 for line in file:
     primary, satellite = line.strip().split(")")
     orbits[satellite] = primary
