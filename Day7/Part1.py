@@ -132,5 +132,4 @@ for test in inputStream:
 signalStrengths.sort(reverse = True)
 print("The strongest possible signal is " + str(signalStrengths[0]))
 
-
 file.close()

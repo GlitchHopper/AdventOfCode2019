@@ -1,5 +1,6 @@
-from "/Users/nathanielgugel/Desktop/AdventOfCode2019/Day7/AutomaticInput.py" import AutomaticInput
+listTest = []
 
-test = AutomaticInput("Blarg")
+for i in range(5):
+    listTest.append(chr(ord("A") + i))
 
-test.Print()
+print(listTest)
