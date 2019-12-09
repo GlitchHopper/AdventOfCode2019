@@ -14,101 +14,123 @@ file = open("/Users/nathanielgugel/Desktop/AdventOfCode2019/Day7/PuzzleInput")
 sourceProgram = tuple(int(x) for x in file.readline().split(","))
 program = list(sourceProgram)
 
-iPtr = 0
+testInput = open("/Users/nathanielgugel/Desktop/AdventOfCode2019/InputStream.txt")
 
-while True:
-    instruction = program[iPtr]
-    opCode = GetOpCode(instruction)
+inputStream = []
 
-    if opCode == 1: #addition
-        arg1 = program[iPtr + 1]
-        arg2 = program[iPtr + 2]
-        dest = program[iPtr + 3]
-        
-        if GetParamMode(instruction, 1) == 0: arg1 = program[arg1]
+for line in testInput:
+    inputStream.append([int(x) for x in line.strip("\n").split(",")])
 
-        if GetParamMode(instruction, 2) == 0: arg2 = program[arg2]
+inputState = "phase_setting"
 
-        program[dest] = arg1 + arg2
-        iPtr += 4
-    elif opCode == 2: #subtraction
-        arg1 = program[iPtr + 1]
-        arg2 = program[iPtr + 2]
-        dest = program[iPtr + 3]
-        
-        if GetParamMode(instruction, 1) == 0: arg1 = program[arg1]
+amplifierCount = 5
 
-        if GetParamMode(instruction, 2) == 0: arg2 = program[arg2]
+signalStrengths = []
 
-        program[dest] = arg1 * arg2
-        iPtr += 4
-    elif opCode == 3: #input
-        dest = program[iPtr + 1]
-        userInput = ""
+for test in inputStream:
+    signal = 0
+    for i in range(amplifierCount):
 
-        if inputMode == "automatic":
-            phaseSetting = autoInputStream.Next()
-            outputSignal
-        else: #manual
-            userInput = int(input("> "))
+        iPtr = 0
+        program = list(sourceProgram)
+        while True:
+            instruction = program[iPtr]
+            opCode = GetOpCode(instruction)
 
-        program[dest] = userInput
-        iPtr += 2
-    elif opCode == 4: #output
-        arg1 = program[iPtr + 1]
+            if opCode == 1: #addition
+                arg1 = program[iPtr + 1]
+                arg2 = program[iPtr + 2]
+                dest = program[iPtr + 3]
+                
+                if GetParamMode(instruction, 1) == 0: arg1 = program[arg1]
 
-        if GetParamMode(instruction, 1) == 0: arg1 = program[arg1]
-        
-        print(arg1)
-        iPtr += 2
-    elif opCode == 5: #jump-if-true
-        arg1 = program[iPtr + 1]
+                if GetParamMode(instruction, 2) == 0: arg2 = program[arg2]
 
-        if GetParamMode(instruction, 1) == 0: arg1 = program[arg1]
+                program[dest] = arg1 + arg2
+                iPtr += 4
+            elif opCode == 2: #subtraction
+                arg1 = program[iPtr + 1]
+                arg2 = program[iPtr + 2]
+                dest = program[iPtr + 3]
+                
+                if GetParamMode(instruction, 1) == 0: arg1 = program[arg1]
 
-        if arg1 != 0:
-            arg2 = program[iPtr + 2]
-            if GetParamMode(instruction, 2) == 0: arg2 = program[arg2]
-            iPtr = arg2
-        else:
-            iPtr += 3
-    elif opCode == 6: #jump-if-false
-        arg1 = program[iPtr + 1]
+                if GetParamMode(instruction, 2) == 0: arg2 = program[arg2]
 
-        if GetParamMode(instruction, 1) == 0: arg1 = program[arg1]
+                program[dest] = arg1 * arg2
+                iPtr += 4
+            elif opCode == 3: #input
+                dest = program[iPtr + 1]
+                userInput = ""
+                if inputState == "phase_setting":
+                    userInput = test[i]
+                    inputState = "signal"
+                elif inputState == "signal":
+                    userInput = signal
+                    inputState = "phase_setting"
 
-        if arg1 == 0:
-            arg2 = program[iPtr + 2]
-            if GetParamMode(instruction, 2) == 0: arg2 = program[arg2]
-            iPtr = arg2
-        else:
-            iPtr += 3
-    elif opCode == 7: #less than
-        arg1 = program[iPtr + 1]
-        arg2 = program[iPtr + 2]
-        dest = program[iPtr + 3]
-        
-        if GetParamMode(instruction, 1) == 0: arg1 = program[arg1]
+                program[dest] = userInput
+                iPtr += 2
+            elif opCode == 4: #output
+                arg1 = program[iPtr + 1]
 
-        if GetParamMode(instruction, 2) == 0: arg2 = program[arg2]
+                if GetParamMode(instruction, 1) == 0: arg1 = program[arg1]
+                signal = arg1
+                # print(arg1)
+                iPtr += 2
+            elif opCode == 5: #jump-if-true
+                arg1 = program[iPtr + 1]
 
-        program[dest] = 1 if arg1 < arg2 else 0
-        iPtr += 4
-    elif opCode == 8: #equals
-        arg1 = program[iPtr + 1]
-        arg2 = program[iPtr + 2]
-        dest = program[iPtr + 3]
-        
-        if GetParamMode(instruction, 1) == 0: arg1 = program[arg1]
+                if GetParamMode(instruction, 1) == 0: arg1 = program[arg1]
 
-        if GetParamMode(instruction, 2) == 0: arg2 = program[arg2]
+                if arg1 != 0:
+                    arg2 = program[iPtr + 2]
+                    if GetParamMode(instruction, 2) == 0: arg2 = program[arg2]
+                    iPtr = arg2
+                else:
+                    iPtr += 3
+            elif opCode == 6: #jump-if-false
+                arg1 = program[iPtr + 1]
 
-        program[dest] = 1 if arg1 == arg2 else 0
-        iPtr += 4
-    elif opCode == 99: #termination
-        break
-    else:
-        print("Error: Invalid OpCode.")
-        break
+                if GetParamMode(instruction, 1) == 0: arg1 = program[arg1]
+
+                if arg1 == 0:
+                    arg2 = program[iPtr + 2]
+                    if GetParamMode(instruction, 2) == 0: arg2 = program[arg2]
+                    iPtr = arg2
+                else:
+                    iPtr += 3
+            elif opCode == 7: #less than
+                arg1 = program[iPtr + 1]
+                arg2 = program[iPtr + 2]
+                dest = program[iPtr + 3]
+                
+                if GetParamMode(instruction, 1) == 0: arg1 = program[arg1]
+
+                if GetParamMode(instruction, 2) == 0: arg2 = program[arg2]
+
+                program[dest] = 1 if arg1 < arg2 else 0
+                iPtr += 4
+            elif opCode == 8: #equals
+                arg1 = program[iPtr + 1]
+                arg2 = program[iPtr + 2]
+                dest = program[iPtr + 3]
+                
+                if GetParamMode(instruction, 1) == 0: arg1 = program[arg1]
+
+                if GetParamMode(instruction, 2) == 0: arg2 = program[arg2]
+
+                program[dest] = 1 if arg1 == arg2 else 0
+                iPtr += 4
+            elif opCode == 99: #termination
+                break
+            else:
+                print("Error: Invalid OpCode.")
+                break
+    signalStrengths.append(signal)
+
+signalStrengths.sort(reverse = True)
+print("The strongest possible signal is " + str(signalStrengths[0]))
+
 
 file.close()
