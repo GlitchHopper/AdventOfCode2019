@@ -15,8 +15,8 @@ class Coordinate:
     def __repr__(self):
         return "(" + str(self.x) + "," + str(self.y) + ")"
 
-file = open("/Users/nathanielgugel/Desktop/AdventOfCode2019/Day10/PuzzleInput.txt")
-# file = open("/Users/nathanielgugel/Desktop/AdventOfCode2019/Day10/TestInput.txt")
+# file = open("/Users/nathanielgugel/Desktop/AdventOfCode2019/Day10/PuzzleInput.txt")
+file = open("/Users/nathanielgugel/Desktop/AdventOfCode2019/Day10/TestInput.txt")
 
 asteroidField = file.readlines()
 
