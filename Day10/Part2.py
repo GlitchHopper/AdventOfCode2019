@@ -24,22 +24,22 @@ file = open("/Users/nathanielgugel/Desktop/AdventOfCode2019/Day10/PuzzleInput.tx
 # file = open("/Users/nathanielgugel/Desktop/AdventOfCode2019/Day10/TestInput.txt")
 
 laser = Vector(23, 19)
-# laser = Vector(11, 13)
+# laser = Vector(8, 3)
 
-destroyCount = 200
+destroyCount = 201
 
 asteroidField = file.readlines()
 
 asteroidList = list()
 
 debugArray = list(asteroidField)
-def UpdateOutput(destructionPoint):
+def UpdateOutput(destructionPoint, destructionIndex):
     outputFile = open("/Users/nathanielgugel/Desktop/AdventOfCode2019/Day10/TestOutput.txt", "w+")
 
     x = destructionPoint.x
     y = destructionPoint.y
     changeLine = list(debugArray[y])
-    changeLine[x] = "*"
+    changeLine[x] = str((destructionIndex % 9) + 1)
     newStr = "".join(changeLine)
 
     debugArray[y] = newStr
@@ -81,16 +81,17 @@ destructionIndex = 0
 while destructionIndex < destroyCount:
     for asterList in asteroidtoAngleList:
         targetAsteroid = asterList[0]
-        UpdateOutput(targetAsteroid + laser)
+        # UpdateOutput(targetAsteroid + laser, destructionIndex)
         # print(str(destructionIndex + 1) + ". " +  str(targetAsteroid + laser))
         asterList.remove(asterList[0])
         destructionIndex += 1
         if destructionIndex == destroyCount:
             break
-    for i in range(len(asteroidtoAngleList), 1, -1):
+    listLen = len(asteroidtoAngleList)
+    for i in range(listLen, 0, -1):
         asterList = asteroidtoAngleList[i-1]
         if len(asterList) <= 0:
-            asteroidtoAngleList.remove(asterList)
+            asteroidtoAngleList.pop(i - 1)
         
 targetAsteroid += laser
 
